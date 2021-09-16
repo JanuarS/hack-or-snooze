@@ -49,8 +49,8 @@ class StoryList {
 
   static async getStories() {
     // Note presence of `static` keyword: this indicates that getStories is
-    //  **not** an instance method. Rather, it is a method that is called on the
-    //  class directly. Why doesn't it make sense for getStories to be an
+    //  **not** an instance method. Rather, it is a method that is called on
+    //  the class directly. Why doesn't it make sense for getStories to be an
     //  instance method?
 
     // query the /stories endpoint (no auth required)
@@ -73,8 +73,10 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
+   async addStory(user, newStory) {
     // UNIMPLEMENTED: complete this function!
+    console.log("This is a story")
+    return story;
   }
 }
 
