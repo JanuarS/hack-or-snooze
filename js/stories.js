@@ -50,3 +50,24 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function submitStory(evt) {
+  console.debug("submitStory");
+  evt.preventDefault();
+
+  const author = $("#new-story-author").val();
+  const title = $("#new-story-title").val();
+  const url = $("#new-story-url").val();
+  const username = currentUser.username;
+  const formData = {title, url, author, username};
+
+  console.log(formData);
+  let story = await StoryList.addStory(currentUser, formData);
+  console.log(story);
+
+  const $story = generateStoryMarkup(newStory);
+
+  $allStoriesList.prepend($story);
+}
+
+$addStoryForm.on("submit", submitStory);
