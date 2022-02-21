@@ -61,7 +61,8 @@ async function submitStory(evt) {
   const username = currentUser.username;
   const formData = {title, url, author, username};
 
-  let newStory = await storyList.addStory(currentUser, formData);   // storyList instance of StoryList
+  // storyList instance of StoryList
+  let newStory = await storyList.addStory(currentUser, formData); 
 
   const $story = generateStoryMarkup(newStory);
 
