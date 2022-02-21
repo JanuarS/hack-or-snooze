@@ -52,7 +52,7 @@ function putStoriesOnPage() {
 }
 
 async function submitStory(evt) {
-  console.debug("submitStory");
+  console.debug("submitNewStory");
   evt.preventDefault();
 
   const author = $("#new-story-author").val();
@@ -61,9 +61,7 @@ async function submitStory(evt) {
   const username = currentUser.username;
   const formData = {title, url, author, username};
 
-  console.log(formData);
-  let story = await StoryList.addStory(currentUser, formData);
-  console.log(story);
+  let newStory = await storyList.addStory(currentUser, formData);   // storyList instance of StoryList
 
   const $story = generateStoryMarkup(newStory);
 
