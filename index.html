@@ -55,16 +55,16 @@
   <!-- form for adding new story -->
   <form action="" id="add-story-form" class="hidden">
     <div>
-      <label for="new-story-author">author</label>
-      <input id="new-story-author" required>
+      <label for="new-author">author</label>
+      <input id="new-author" required>
     </div>
     <div class="add-story-input">
-      <label for="new-story-title">title</label>
-      <input id="new-story-title" required>
+      <label for="new-title">title</label>
+      <input id="new-title" required>
     </div>
     <div class="add-story-input">
-      <label for="new-story-url">url</label>
-      <input id="new-story-url" required type="url">
+      <label for="new-url">url</label>
+      <input id="new-url" required type="url">
     </div>
     <button type="submit">submit</button>
     <hr>
@@ -75,6 +75,12 @@
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
+
+  <!-- List of all favorited stories -->
+  <ol id="favorite-stories-list" class="favorites-list"></ol>
+
+  <!-- List of all user stories -->
+  <ol id="my-stories-list" class="my-stories-list"></ol>
 
 </section>
 

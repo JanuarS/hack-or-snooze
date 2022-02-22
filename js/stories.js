@@ -51,13 +51,16 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/** Submit new story to server and puts on page. */
+
 async function submitStory(evt) {
   console.debug("submitNewStory");
   evt.preventDefault();
 
-  const author = $("#new-story-author").val();
-  const title = $("#new-story-title").val();
-  const url = $("#new-story-url").val();
+  // form data
+  const author = $("#new-author").val();
+  const title = $("#new-title").val();
+  const url = $("#new-url").val();
   const username = currentUser.username;
   const formData = {title, url, author, username};
 
@@ -70,3 +73,20 @@ async function submitStory(evt) {
 }
 
 $addStoryForm.on("submit", submitStory);
+
+/** Gets list of favorite stories from server, generates their HTML, and puts on page. */
+
+async function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage");
+
+  console.log(currentUser.favorites.length);
+  if (currentUser.favorites.length == 0) {
+    $favoriteStoriesList.append("<h5>No favorites added!</h5>");
+  } else {
+    for (let story of currentUser.favorites) {
+      const $story = generateStoryMarkup(story);
+      console.log(story);
+      $favoriteStoriesList.append($story);
+    }
+  }
+}
