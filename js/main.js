@@ -20,7 +20,8 @@ const $addStoryForm = $("#add-story-form");
 const $navFavorites = $("#nav-favorites");
 const $favoriteStoriesList = $("#favorite-stories-list");
 
-const $myStories = $("#my-stories-list");
+const $navMyStories = $("#nav-my-stories");
+const $myStoriesList = $("#my-stories-list");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After

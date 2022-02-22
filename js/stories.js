@@ -79,14 +79,31 @@ $addStoryForm.on("submit", submitStory);
 async function putFavoritesOnPage() {
   console.debug("putFavoritesOnPage");
 
-  console.log(currentUser.favorites.length);
+  // console.log(currentUser.favorites.length);
   if (currentUser.favorites.length == 0) {
     $favoriteStoriesList.append("<h5>No favorites added!</h5>");
   } else {
     for (let story of currentUser.favorites) {
       const $story = generateStoryMarkup(story);
-      console.log(story);
+      // console.log(story);
       $favoriteStoriesList.append($story);
+    }
+  }
+}
+
+/** Gets list of user stories from server, generates their HTML, and puts on page. */
+
+async function putMyStoriesOnPage() {
+  console.debug("putMyStoriesOnPage");
+
+  console.log(currentUser.ownStories);
+  if (currentUser.ownStories.length == 0) {
+    $myStoriesList.append("<h5>No stories added by user yet!</h5>");
+  } else {
+    for (let story of currentUser.ownStories) {
+      const $story = generateStoryMarkup(story);
+      console.log(story);
+      $myStoriesList.append($story);
     }
   }
 }
