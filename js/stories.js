@@ -23,8 +23,26 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  let starType = "far";
+  let trashCan = "";
+
+  if(story.username == currentUser.username) {
+    trashCan = `<i class="fas fa-trash-alt"></i>`;
+  } else {
+    trashCan = "";
+  }
+
+  /** Compare the storyId to the currentUser.favorites. If story is contained in favorites, change the star */
+  if(currentUser.favorites.find(favorite => favorite.storyId === story.storyId)) {
+    starType = "fas";
+  } else {
+    starType = "far";
+  }
+
   return $(`
       <li id="${story.storyId}">
+        ${trashCan}
+        <i id="favoriteStar" class="${starType} fa-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -79,16 +97,17 @@ $addStoryForm.on("submit", submitStory);
 async function putFavoritesOnPage() {
   console.debug("putFavoritesOnPage");
 
-  // console.log(currentUser.favorites.length);
+  $favoriteStoriesList.empty();
+
   if (currentUser.favorites.length == 0) {
     $favoriteStoriesList.append("<h5>No favorites added!</h5>");
   } else {
     for (let story of currentUser.favorites) {
       const $story = generateStoryMarkup(story);
-      // console.log(story);
       $favoriteStoriesList.append($story);
     }
   }
+  $favoriteStoriesList.show();
 }
 
 /** Gets list of user stories from server, generates their HTML, and puts on page. */
@@ -96,14 +115,49 @@ async function putFavoritesOnPage() {
 async function putMyStoriesOnPage() {
   console.debug("putMyStoriesOnPage");
 
+  $myStoriesList.empty();
+
   console.log(currentUser.ownStories);
   if (currentUser.ownStories.length == 0) {
     $myStoriesList.append("<h5>No stories added by user yet!</h5>");
   } else {
     for (let story of currentUser.ownStories) {
       const $story = generateStoryMarkup(story);
-      console.log(story);
       $myStoriesList.append($story);
     }
   }
+  $myStoriesList.show();
 }
+
+async function toggleFavorites(evt) {
+  console.debug("toggleFavoritesClick");
+
+  const favoriteTrue = `fas fa-star`;
+  const favoriteFalse = `far fa-star`;
+  const storyId = evt.target.closest("li").id;
+
+  if(evt.target.attributes.class.nodeValue == favoriteFalse) {
+    evt.target.attributes.class.nodeValue = favoriteTrue;
+    const requestType = 'post';
+    const results = await User.toggleFavorites(currentUser, storyId, requestType);
+    console.log(results);
+  } else {
+    evt.target.attributes.class.nodeValue = favoriteFalse;
+    const requestType = 'delete';
+    const results = await User.toggleFavorites(currentUser, storyId, requestType);
+    console.log(results);
+  }
+}
+
+$storiesList.on("click", ".fa-star", toggleFavorites);
+
+async function deleteStory(evt) {
+  console.debug("deleteStoryClick");
+
+  const storyId = evt.target.closest("li").id;
+  const results = await User.deleteStory(currentUser, storyId);
+
+  console.log(results);
+}
+
+$storiesList.on("click", ".fa-trash-alt", deleteStory);

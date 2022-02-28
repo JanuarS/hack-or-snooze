@@ -201,4 +201,47 @@ class User {
       return null;
     }
   }
+
+  /** Add/remove from favorites list */
+
+  static async toggleFavorites(currentUser, storyId, requestType) {
+    const token = JSON.stringify({
+      "token": currentUser.loginToken
+    });
+
+    const config = {
+      method: requestType,
+      url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: token
+    }
+
+    const response = await axios(config);
+
+    return response.data;
+  }
+
+  /** Delete user stories */
+
+  static async deleteStory(currentUser, storyId) {
+    const token = JSON.stringify({
+      "token": currentUser.loginToken
+    });
+
+    const config = {
+      method: 'delete',
+      url: `${BASE_URL}/stories/${storyId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: token
+    }
+
+    const response = await axios(config);
+
+    return response.data;
+  }
+
 }
