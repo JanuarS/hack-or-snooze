@@ -23,26 +23,17 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
-  let starType = "far";
-  let trashCan = "";
+  let privilages = "";
 
-  if(story.username == currentUser.username) {
-    trashCan = `<i class="fas fa-trash-alt"></i>`;
-  } else {
-    trashCan = "";
-  }
-
-  /** Compare the storyId to the currentUser.favorites. If story is contained in favorites, change the star */
-  if(currentUser.favorites.find(favorite => favorite.storyId === story.storyId)) {
-    starType = "fas";
-  } else {
-    starType = "far";
+  if(Boolean(currentUser)) {
+    privilages =  `
+      ${getTrashHTML(story)}
+      ${getStarHTML(story)}`;
   }
 
   return $(`
       <li id="${story.storyId}">
-        ${trashCan}
-        <i id="favoriteStar" class="${starType} fa-star"></i>
+        ${privilages}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,6 +42,22 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+function getTrashHTML(story) {
+  if(story.username == currentUser.username) {
+    return `<i class="fas fa-trash-alt"></i>`;
+  } else {
+    return "";
+  }
+}
+
+function getStarHTML(story) {
+  if(currentUser.favorites.find(favorite => favorite.storyId === story.storyId)) {
+    return `<i id="favoriteStar" class="fas fa-star"></i>`
+  } else {
+    return `<i id="favoriteStar" class="far fa-star"></i>`
+  }
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -129,6 +136,8 @@ async function putMyStoriesOnPage() {
   $myStoriesList.show();
 }
 
+/** Allow user to toggle favorite stories, and puts on their favorites list. */
+
 async function toggleFavorites(evt) {
   console.debug("toggleFavoritesClick");
 
@@ -150,6 +159,8 @@ async function toggleFavorites(evt) {
 }
 
 $storiesList.on("click", ".fa-star", toggleFavorites);
+
+/** Allow users to delete their own stories, and removes from their ownStories list. */
 
 async function deleteStory(evt) {
   console.debug("deleteStoryClick");
