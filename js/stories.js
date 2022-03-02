@@ -177,9 +177,6 @@ async function putProfileOnPage() {
   console.debug("putProfileOnPage");
 
   const {name, username, createdAt} = currentUser;
-  console.log(name);
-  console.log(username);
-  console.log(createdAt);
 
   $userProfile.append(`
     <h3>User Profile Info</h3>
