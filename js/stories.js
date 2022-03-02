@@ -95,6 +95,8 @@ async function submitStory(evt) {
   const $story = generateStoryMarkup(newStory);
 
   $allStoriesList.prepend($story);
+  window.location.reload();
+
 }
 
 $addStoryForm.on("submit", submitStory);
@@ -149,11 +151,13 @@ async function toggleFavorites(evt) {
     const requestType = 'post';
     const results = await User.toggleFavorites(currentUser, storyId, requestType);
     console.log(results);
+    window.location.reload();
   } else {
     evt.target.attributes.class.nodeValue = favoriteFalse;
     const requestType = 'delete';
     const results = await User.toggleFavorites(currentUser, storyId, requestType);
     console.log(results);
+    window.location.reload();
   }
 }
 
@@ -166,6 +170,8 @@ async function deleteStory(evt) {
 
   const storyId = evt.target.closest("li").id;
   await User.deleteStory(currentUser, storyId);
+  window.location.reload();
+
 }
 
 $storiesList.on("click", ".fa-trash-alt", deleteStory);
