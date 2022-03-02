@@ -166,9 +166,27 @@ async function deleteStory(evt) {
   console.debug("deleteStoryClick");
 
   const storyId = evt.target.closest("li").id;
-  const results = await User.deleteStory(currentUser, storyId);
-
-  console.log(results);
+  await User.deleteStory(currentUser, storyId);
 }
 
 $storiesList.on("click", ".fa-trash-alt", deleteStory);
+
+/** Put currentUser information on page. */
+
+async function putProfileOnPage() {
+  console.debug("putProfileOnPage");
+
+  const {name, username, createdAt} = currentUser;
+  console.log(name);
+  console.log(username);
+  console.log(createdAt);
+
+  $userProfile.append(`
+    <h3>User Profile Info</h3>
+    <p>Name: ${name}</p>
+    <p>Username: ${username}</p>
+    <p>Account Created: ${createdAt}</p>
+  `);
+}
+
+$storiesList.on("click", putProfileOnPage);

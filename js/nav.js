@@ -65,3 +65,11 @@ function navMyStoriesClick(evt) {
 }
 
 $navMyStories.on("click", navMyStoriesClick);
+
+function navProfileClick(evt) {
+  console.debug("navProfileClick", evt);
+  hidePageComponents();
+  putProfileOnPage();
+}
+
+$navProfile.on("click", navProfileClick);
