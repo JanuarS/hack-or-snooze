@@ -185,5 +185,3 @@ async function putProfileOnPage() {
   `);
   $userProfile.show();
 }
-
-$storiesList.on("click", putProfileOnPage);
