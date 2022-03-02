@@ -124,7 +124,6 @@ async function putMyStoriesOnPage() {
 
   $myStoriesList.empty();
 
-  console.log(currentUser.ownStories);
   if (currentUser.ownStories.length == 0) {
     $myStoriesList.append("<h5>No stories added by user yet!</h5>");
   } else {
@@ -184,6 +183,7 @@ async function putProfileOnPage() {
     <p>Username: ${username}</p>
     <p>Account Created: ${createdAt}</p>
   `);
+  $userProfile.show();
 }
 
 $storiesList.on("click", putProfileOnPage);
